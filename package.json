@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/sunxi1997/wx-mini-program-user#readme",
   "dependencies": {
-    "sx-event": "^1.0.0"
+    "sx-user": "^1.0.0"
   }
 }

@@ -1,10 +1,9 @@
-import Event from "sx-event";
+import user from 'sx-user/user'
 
-export default class user {
+export default class wxUser extends user{
    constructor() {
+      super();
       this.code = ''
-      this.event = new Event()
-      this._userInfo = null
       this._wxUserInfo = null
    }
 
@@ -45,34 +44,6 @@ export default class user {
       })
    }
 
-   getUserInfo(sync = false) {
-      return sync ? this._userInfo :
-         new Promise((resolve) => {
-            this._userInfo ?
-               resolve(this._userInfo) :
-               this.event.$on('setUserInfo', onInit)
-            function onInit(userInfo) {
-               event.$off('setUserInfo', onInit)
-               onInit = null;
-               resolve(userInfo);
-            }
-         })
-   }
-
-   setUserInfo(userInfo) {
-      if(!userInfo || typeof userInfo !== 'object')
-         return console.error(userInfo,'is not a object!')
-      this._userInfo = Object.assign(this._userInfo || {},userInfo)
-      this.event.$emit('setUserInfo',userInfo)
-   }
-
-   setWxUserInfo(wxUserInfo) {
-      if(!wxUserInfo || typeof wxUserInfo !== 'object')
-         return console.error(wxUserInfo,'is not a object!')
-      this._wxUserInfo = Object.assign(this._wxUserInfo || {},wxUserInfo)
-      this.event.$emit('setWxUserInfo',wxUserInfo)
-   }
-
    getWxUserInfo(sync = false) {
       return sync ? this._wxUserInfo :
          new Promise((resolve) => {
@@ -86,4 +57,12 @@ export default class user {
             }
          })
    }
+
+   setWxUserInfo(wxUserInfo) {
+      if(!wxUserInfo || typeof wxUserInfo !== 'object')
+         return console.error(wxUserInfo,'is not a object!')
+      this._wxUserInfo = Object.assign(this._wxUserInfo || {},wxUserInfo)
+      this.event.$emit('setWxUserInfo',wxUserInfo)
+   }
+
 }
