@@ -1,6 +1,6 @@
 {
   "name": "wx-mini-program-user",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/sunxi1997/wx-mini-program-user.git"
   },
+  "miniprogram": "dist",
   "author": "",
   "license": "ISC",
   "bugs": {
