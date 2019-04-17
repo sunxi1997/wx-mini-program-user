@@ -36,7 +36,7 @@ export default class wxUser extends user{
       return new Promise((resolve, fail) => {
          // 登录
          wx.login({
-            success(res) {
+            success:res=> {
                this.code = res.code
                resolve(res)
             }, fail
