@@ -1,6 +1,6 @@
-import user from 'sx-user/user'
+import {User} from 'sx-user'
 
-export default class wxUser extends user{
+export default class wxUser extends User{
    constructor() {
       super();
       this.code = ''
@@ -17,7 +17,6 @@ export default class wxUser extends user{
                      // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
                      wx.getUserInfo({
                         success: res => {
-                           console.log('已授权', res)
                            this.setWxUserInfo(res)
                            resolve(res)
                         },
@@ -47,9 +46,10 @@ export default class wxUser extends user{
    getWxUserInfo(sync = false) {
       return sync ? this._wxUserInfo :
          new Promise((resolve) => {
+            let event = this.event;
             this._wxUserInfo ?
                resolve(this._wxUserInfo) :
-               this.event.$on('setWxUserInfo', onInit)
+               event.$on('setWxUserInfo', onInit)
             function onInit(userInfo) {
                event.$off('setWxUserInfo', onInit)
                onInit = null;

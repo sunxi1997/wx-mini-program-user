@@ -1,6 +1,6 @@
 {
   "name": "wx-mini-program-user",
-  "version": "1.0.5",
+  "version": "1.0.8",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -18,6 +18,6 @@
   },
   "homepage": "https://github.com/sunxi1997/wx-mini-program-user#readme",
   "dependencies": {
-    "sx-user": "^1.0.3"
+    "sx-user": "^1.0.4"
   }
 }
