@@ -7,30 +7,23 @@ export default class wxUser extends User{
       this._wxUserInfo = null
    }
 
+   /**
+    * @method init - 初始化用户数据，相当于调用doWxLogin和authSettingUserInfo
+    *
+    * @return Promise
+    */
    init() {
       return Promise.all([
          this.doWxLogin(),
-         new Promise((resolve, fail) => {
-            wx.getSetting({
-               success: res => {
-                  if (res.authSetting['scope.userInfo']) {
-                     // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-                     wx.getUserInfo({
-                        success: res => {
-                           this.setWxUserInfo(res)
-                           resolve(res)
-                        },
-                        fail
-                     })
-                  } else
-                     resolve()
-               },
-               fail
-            });
-         })
+         this.authSettingUserInfo(),
       ])
    }
 
+   /**
+    * @method doWxLogin  - 执行微信登录（wx.login)，获取code
+    *
+    * @return Promise
+    */
    doWxLogin() {
       return new Promise((resolve, fail) => {
          // 登录
@@ -43,6 +36,39 @@ export default class wxUser extends User{
       })
    }
 
+   /**
+    * @method authSettingUserInfo - 判断用户授权，获取并保存授权数据到用户数据中(setWxUserInfo)
+    *
+    * @return Promise
+    */
+   authSettingUserInfo(){
+      return new Promise((resolve, fail) => {
+         wx.getSetting({
+            success: res => {
+               if (res.authSetting['scope.userInfo']) {
+                  // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+                  wx.getUserInfo({
+                     success: res => {
+                        this.setWxUserInfo(res)
+                        resolve(res)
+                     },
+                     fail
+                  })
+               } else
+                  resolve()
+            },
+            fail
+         });
+      })
+   }
+
+   /**
+    * @method getWxUserInfo - 获取授权数据
+    *
+    * @param {Boolean} sync=false - 同步获取
+    *
+    * @return {Object|Null|Promise}
+    */
    getWxUserInfo(sync = false) {
       return sync ? this._wxUserInfo :
          new Promise((resolve) => {
@@ -58,6 +84,9 @@ export default class wxUser extends User{
          })
    }
 
+   /**
+    * @method setWxUserInfo - 保存用户授权数据
+    */
    setWxUserInfo(wxUserInfo) {
       if(!wxUserInfo || typeof wxUserInfo !== 'object')
          return console.error(wxUserInfo,'is not a object!')
