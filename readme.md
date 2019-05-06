@@ -11,29 +11,33 @@ wx.login 获取到的code
 
 ### init
 
-执行一次doWxLogin
-执行一次authSettingUserInfo
+执行一次 doWxLogin
+
+执行一次 authSettingUserInfo
 
 返回值：Promise
 
 
 ### doWxLogin
 
-调用wx.login 初始化code
+调用 wx.login 并初始化 code 属性
 
 ### authSettingUserInfo
 
-获取微信小程序授权信息，如果授权了，会使用setWxUserInfo保存授权信息
+获取微信小程序授权信息，如果已授权，会自动使用 setWxUserInfo 保存授权信息
 
 ### setWxUserInfo(wxUserInfo)
 
-保存授权信息
+手动保存微信授权信息
 
-wxUserInfo为小程序用户授权的结果，可通过wx.getUserInfo或button open-type='getuserInfo'
+````
+ @param {Object} wxUserInfo - 微信授权数据
+````
+参数 wxUserInfo 为小程序用户授权的结果，可通过微信的 wx.getUserInfo 或 <button open-type='getuserInfo'>获得授权数据
 
 ### getWxUserInfo(sync)
 
-获取授权信息
+获取微信授权信息
 
 ````
  @param {Boolean} sync=false - 同步获取
